@@ -5,7 +5,7 @@
 # Build hwx/hdp_node_base first
 cd ./dockerfiles/hdp_node_base
 x=$(docker images | grep -c  hwx/hdp_node_base)
-if [ x -eq 0 ]; then
+if [ $x -eq 0 ]; then
 	echo -e "\n*** Building hwx/hdp_node_base image... ***\n"
 	docker build -t hwx/hdp_node_base .
 	echo -e "\n*** Build of hwx/hdp_node_base complete! ***\n"
