@@ -1,5 +1,7 @@
 #!/bin/bash
 
+DS_DIR=$PWD
+
 # Grab the HWX-University Dockerfiles
 #cd /root
 #git clone https://github.com/HortonworksUniversity/dockerfiles.git
@@ -25,10 +27,21 @@ cd /root/dockerfiles/hdp_node
 docker build -t hwx/hdp_node .
 echo -e "\n*** Build of hwx/hdp_node complete! ***\n"
 
+# Build hwx/hdp_python_node
+echo -e "\n*** Building hwx/hdp_python_node ***\n"
+cd $DS_DIR/dockerfiles/hdp_python_node
+docker build -t hwx/hdp_python_node .
+echo -e "\n*** Build of hwx/hdp_python_node complete! ***\n"
+
+# Build hwx/ipython_node
+echo -e "\n*** Building hwx/ipython_node ***\n"
+cd $DS_DIR/dockerfiles/ipython_node
+docker build -t hwx/ipython_node .
+echo -e "\n*** Build of hwx/ipython_node complete! ***\n"
+
 #If this script is execute multiple times, untagged images get left behind
 #This command removes any untagged Docker images
 docker rmi $(docker images | grep "^<none>" | awk "{print $3}")
-
 
 # Copy utility scripts into /root/scripts, which is already in the PATH
 echo "Copying utility scripts..."
@@ -46,8 +59,6 @@ chown -R train:train /home/train/labs
 cp /root/scripts/setpath.sh /etc/profile.d/
 chmod +x /etc/profile.d/setpath.sh
 source /etc/profile.d/setpath.sh
-
-
 
 #Install hadoop-client on the Ubuntu instance
 wget http://public-repo-1.hortonworks.com/HDP/ubuntu12/2.x/hdp.list -O /etc/apt/sources.list.d/hdp.list
