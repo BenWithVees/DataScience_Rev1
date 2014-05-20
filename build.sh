@@ -66,12 +66,13 @@ cp /root/scripts/setpath.sh /etc/profile.d/
 chmod +x /etc/profile.d/setpath.sh
 source /etc/profile.d/setpath.sh
 
-#Install hadoop-client on the Ubuntu instance
+#Install hadoop-client and Pig on the Ubuntu instance
 wget http://public-repo-1.hortonworks.com/HDP/ubuntu12/2.x/hdp.list -O /etc/apt/sources.list.d/hdp.list
 gpg --keyserver pgp.mit.edu --recv-keys B9733A7A07513CAD
 gpg -a --export 07513CAD | apt-key add –
 apt-get update
 apt-get -y --force-yes install hadoop-client
+apt-get -y --force-yes install pig
 cp /root/dockerfiles/hdp_node/configuration_files/core_hadoop/* /etc/hadoop/conf/
 
 #Replace /etc/hosts with one that contains the Docker server names
