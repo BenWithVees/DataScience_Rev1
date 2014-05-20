@@ -5,7 +5,7 @@ MAINTAINER Rich Raposa, rich@hortonworks.com
 RUN apt-get -y install openssh-server openssh-client libagg-dev 
 
 #Install IPython and stats/scientific/nlp libraries
-RUN apt-get -y install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose build-essential python-dev python-setuptools libatlas-dev libatlas3-base python-pip libyaml-devel
+RUN apt-get -y install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose build-essential python-dev python-setuptools libatlas-dev libatlas3-base python-pip 
 RUN pip install -U scikit-learn
 RUN pip install -U pyyaml
 RUN pip install -U nltk
