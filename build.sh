@@ -48,8 +48,14 @@ echo "Copying utility scripts..."
 cp /root/dockerfiles/start_scripts/* /root/scripts/
 cp /root/$1/scripts/* /root/scripts/
 
-#mkdir /root/labs
-#cp -R /root/$1/labs/* /root/labs/
+
+# Install JDK 7
+apt-get -y install openjdk-7-jdk
+
+# Fix a small issue with the yarn binary
+mkdir -p /usr/java/default/bin/
+ln –s /usr/bin/java /usr/java/default/bin/java
+
 
 mkdir /home/train/labs
 cp -R /root/$1/labs/* /home/train/labs
