@@ -35,7 +35,7 @@ echo -e "\n*** Build of hwx/hdp_python_node complete! ***\n"
 
 # Build hwx/ipython_node
 echo -e "\n*** Building hwx/ipython_node ***\n"
-cd $DS_DIR/dockerfiles/ipython_node
+cd $DS_DIR/dockerfiles/ipython
 docker build -t hwx/ipython_node .
 echo -e "\n*** Build of hwx/ipython_node complete! ***\n"
 
