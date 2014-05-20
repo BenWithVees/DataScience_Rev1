@@ -1,4 +1,4 @@
-FROM ubuntu:12.04
+FROM ubuntu
 
 MAINTAINER Rich Raposa, rich@hortonworks.com
 
