@@ -41,7 +41,7 @@ echo -e "\n*** Build of hwx/ipython_node complete! ***\n"
 
 #If this script is execute multiple times, untagged images get left behind
 #This command removes any untagged Docker images
-docker rmi $(docker images | grep '^<none>' | awk '{print $3}')
+docker rmi -f $(docker images | grep '^<none>' | awk '{print $3}')
 
 # Copy utility scripts into /root/scripts, which is already in the PATH
 echo "Copying utility scripts..."
