@@ -23,6 +23,9 @@ RUN pip install -U nltk
 RUN mkdir -p /root/.matplotlib
 RUN echo "backend: Agg" > /root/.matplotlib/matplotlibrc
 
+# Copy Avro MR lib to Hadoop classpath
+RUN cp /usr/lib/pig/lib/avro-mapred-1.7.4.jar /usr/lib/hadoop/lib/avro-mapred-1.7.4.jar
+
 #Optional: install Python 2.7 and all scientific/statistical packages, including IPython
 #RUN wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-1.9.2-Linux-x86_64.sh
 #RUN bash Anaconda-1.9.2-Linux-x86_64.sh -b
