@@ -107,5 +107,7 @@ then
   tar -C /usr/lib/hadoop-yarn -zxvf /root/$DS_DIR/hadoop2.4/hadoop-yarn.tgz
 fi
 
+#Update hadoop-env.sh to allocate more memory for local tasks
+cp /root/$DS_DIR/hadoop2.4/hadoop-env.sh /etc/hadoop/conf
 
 echo -e "\n*** The lab environment has successfully been built for this classroom VM ***\n"
