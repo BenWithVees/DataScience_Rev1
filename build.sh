@@ -1,6 +1,12 @@
 #!/bin/bash
 
-DS_DIR=$PWD
+if [[ -z $1 ]];
+then
+  echo "Usage: $0 <class_version>"
+  exit 1;
+fi
+
+DS_DIR=$1
 
 # Grab the HWX-University Dockerfiles
 #cd /root
@@ -29,13 +35,13 @@ echo -e "\n*** Build of hwx/hdp_node complete! ***\n"
 
 # Build hwx/hdp_python_node
 echo -e "\n*** Building hwx/hdp_python_node ***\n"
-cd $DS_DIR/dockerfiles/hdp_python_node
+cd /root/$DS_DIR/dockerfiles/hdp_python_node
 docker build -t hwx/hdp_python_node .
 echo -e "\n*** Build of hwx/hdp_python_node complete! ***\n"
 
 # Build hwx/ipython_node
 echo -e "\n*** Building hwx/ipython_node ***\n"
-cd $DS_DIR/dockerfiles/ipython
+cd /root/$DS_DIR/dockerfiles/ipython
 docker build -t hwx/ipython_node .
 echo -e "\n*** Build of hwx/ipython_node complete! ***\n"
 
@@ -46,7 +52,7 @@ docker rmi -f $(docker images | grep '^<none>' | awk '{print $3}')
 # Copy utility scripts into /root/scripts, which is already in the PATH
 echo "Copying utility scripts..."
 cp /root/dockerfiles/start_scripts/* /root/scripts/
-cp /root/$1/scripts/* /root/scripts/
+cp /root/$DS_DIR/scripts/* /root/scripts/
 
 
 # Install JDK 7
@@ -58,7 +64,7 @@ ln –s /usr/bin/java /usr/java/default/bin/java
 
 
 mkdir /home/train/labs
-cp -R /root/$1/labs/* /home/train/labs
+cp -R /root/$DS_DIR/labs/* /home/train/labs
 chown -R train:train /home/train/labs
 
 # Setup environment variables
@@ -77,6 +83,29 @@ cp /root/dockerfiles/hdp_node/configuration_files/core_hadoop/* /etc/hadoop/conf
 
 #Replace /etc/hosts with one that contains the Docker server names
 cp /root/scripts/hosts /etc/
+
+#Update hadoop-client jars to v2.4.0 so that Pig works properly with our clusters (which are based on Hadoop 2.4.0). Unfortunately, Ubuntu packages for Hadoop 2.4.0 are not officially available yet.
+if [[ ! -d /usr/lib/hadoop/hadoop2.2 ]];
+then
+  echo "Updating /usr/lib/hadoop to Hadoop 2.4.0"
+  mkdir /usr/lib/hadoop/hadoop2.2
+  mv /usr/lib/hadoop/*.jar /usr/lib/hadoop/hadoop2.2
+  tar -C /usr/lib/hadoop -zxvf /root/$DS_DIR/hadoop2.4/hadoop.tgz
+fi
+if [[ ! -d /usr/lib/hadoop-mapreduce/hadoop2.2 ]];
+then
+  echo "Updating /usr/lib/hadoop-mapreduce to Hadoop 2.4.0"
+  mkdir /usr/lib/hadoop-mapreduce/hadoop2.2
+  mv /usr/lib/hadoop-mapreduce/*.jar /usr/lib/hadoop-mapreduce/hadoop2.2
+  tar -C /usr/lib/hadoop-mapreduce -zxvf /root/$DS_DIR/hadoop2.4/hadoop-mapreduce.tgz
+fi
+if [[ ! -d /usr/lib/hadoop-yarn/hadoop2.2 ]];
+then
+  echo "Updating /usr/lib/hadoop-yarn to Hadoop 2.4.0"
+  mkdir /usr/lib/hadoop-yarn/hadoop2.2
+  mv /usr/lib/hadoop-yarn/*.jar /usr/lib/hadoop-yarn/hadoop2.2
+  tar -C /usr/lib/hadoop-yarn -zxvf /root/$DS_DIR/hadoop2.4/hadoop-yarn.tgz
+fi
 
 
 echo -e "\n*** The lab environment has successfully been built for this classroom VM ***\n"
