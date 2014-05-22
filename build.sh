@@ -60,7 +60,7 @@ apt-get -y install openjdk-7-jdk
 
 # Fix a small issue with the yarn binary
 mkdir -p /usr/java/default/bin/
-ln –s /usr/bin/java /usr/java/default/bin/java
+ln -s /usr/bin/java /usr/java/default/bin/java
 
 mkdir /root/labs
 cp -R /root/$1/labs/* /root/labs/
