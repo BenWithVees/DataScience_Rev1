@@ -18,6 +18,7 @@ RUN pip install -U pandas
 RUN pip install -U scikit-learn
 RUN pip install -U pyyaml
 RUN pip install -U nltk
+RUN pip install -U avro
 
 # Configure MatPlotLib
 RUN mkdir -p /root/.matplotlib

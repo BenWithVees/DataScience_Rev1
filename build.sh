@@ -82,6 +82,10 @@ cp /root/dockerfiles/hdp_node/configuration_files/core_hadoop/* /etc/hadoop/conf
 #Replace /etc/hosts with one that contains the Docker server names
 cp /root/scripts/hosts /etc/
 
+#Install python pip and the Python Avro library
+apt-get -y --force-yes install python-pip
+pip install -U avro
+
 #Update hadoop-client jars to v2.4.0 so that Pig works properly with our clusters (which are based on Hadoop 2.4.0). Unfortunately, Ubuntu packages for Hadoop 2.4.0 are not officially available yet.
 if [[ ! -d /usr/lib/hadoop/hadoop2.2 ]];
 then

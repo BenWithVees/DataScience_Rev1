@@ -9,6 +9,7 @@ RUN apt-get -y install python-numpy python-scipy python-matplotlib ipython ipyth
 RUN pip install -U scikit-learn
 RUN pip install -U pyyaml
 RUN pip install -U nltk
+RUN pip install -U avro
 RUN ipython profile create nbserver
 
 #Optional: install the Anaconda distribution of Python, which contains IPython and all analytic/scientific libs
