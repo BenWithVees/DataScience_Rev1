@@ -36,6 +36,8 @@ RUN mkdir /root/.ssh
 ADD conf/id_rsa /root/.ssh/id_rsa
 ADD conf/id_rsa.pub /root/.ssh/id_rsa.pub
 ADD conf/sshd_config /etc/ssh/
+RUN mkdir /root/notebooks
+ADD notebooks/ root/notebooks/
 
 EXPOSE 22 8888
 

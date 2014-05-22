@@ -62,10 +62,8 @@ apt-get -y install openjdk-7-jdk
 mkdir -p /usr/java/default/bin/
 ln -s /usr/bin/java /usr/java/default/bin/java
 
-
-mkdir /home/train/labs
-cp -R /root/$DS_DIR/labs/* /home/train/labs
-chown -R train:train /home/train/labs
+mkdir /root/labs
+cp -R /root/$1/labs/* /root/labs/
 
 # Setup environment variables
 cp /root/scripts/setpath.sh /etc/profile.d/
