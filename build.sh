@@ -56,7 +56,7 @@ cp /root/$DS_DIR/scripts/* /root/scripts/
 
 
 # Install JDK 7
-apt-get -y install openjdk-7-jdk
+apt-get -y --force-yes install openjdk-7-jdk
 
 # Fix a small issue with the yarn binary
 mkdir -p /usr/java/default/bin/
