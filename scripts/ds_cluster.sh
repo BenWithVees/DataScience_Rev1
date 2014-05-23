@@ -1,4 +1,5 @@
 #!/bin/bash
+DS_DIR=/root/DataScience_Rev1
 
 if [ $# -lt 1 ]
   then
