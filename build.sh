@@ -55,13 +55,20 @@ echo -e "\n*** Build of hwx/ipython_node complete! ***\n"
 #This command removes any untagged Docker images
 docker rmi -f $(docker images | grep '^<none>' | awk '{print $3}')
 
-# Add DS root directory to ds_cluster.sh if needed
+# Add DS root directory to ds_cluster.sh and ds_ipython.sh if needed
 grep "DS_DIR=" /root/$DS_DIR/scripts/ds_cluster.sh
 if [[ $? > 0 ]];
 then
   sed -e"/\/bin\/bash$/a DS_DIR=\/root\/$DS_DIR" /root/$DS_DIR/scripts/ds_cluster.sh > /tmp/ds_cluster.sh
   mv /tmp/ds_cluster.sh /root/$DS_DIR/scripts
-  chmod +x /root/$DS_DIR/scripts
+  chmod +x /root/$DS_DIR/scripts/ds_cluster.sh
+fi
+grep "DS_DIR=" /root/$DS_DIR/scripts/ds_ipython.sh
+if [[ $? > 0 ]];
+then
+  sed -e"/\/bin\/bash$/a DS_DIR=\/root\/$DS_DIR" /root/$DS_DIR/scripts/ds_ipython.sh > /tmp/ds_ipython.sh
+  mv /tmp/ds_ipython.sh /root/$DS_DIR/scripts
+  chmod +x /root/$DS_DIR/scripts/ds_ipython.sh
 fi
 
 # Copy utility scripts into /root/scripts, which is already in the PATH

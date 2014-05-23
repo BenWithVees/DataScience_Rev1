@@ -10,6 +10,7 @@ RUN pip install -U scikit-learn
 RUN pip install -U pyyaml
 RUN pip install -U nltk
 RUN pip install -U avro
+RUN pip install -U ipython
 RUN ipython profile create nbserver
 
 #Optional: install the Anaconda distribution of Python, which contains IPython and all analytic/scientific libs
@@ -37,8 +38,6 @@ RUN mkdir /root/.ssh
 ADD conf/id_rsa /root/.ssh/id_rsa
 ADD conf/id_rsa.pub /root/.ssh/id_rsa.pub
 ADD conf/sshd_config /etc/ssh/
-RUN mkdir /root/notebooks
-ADD notebooks/ root/notebooks/
 
 EXPOSE 22 8888
 
