@@ -87,6 +87,13 @@ apt-get -y --force-yes install python-pip
 apt-get -y --force-yes install python-dateutil
 pip install -U avro
 
+#Install Ruby, needed for Mahout UI components
+apt-get -y --force-yes install ruby
+apt-get -y --force-yes install rubygems
+gem install sinatra --no-ri --no-rdoc
+gem install fastercsv --no-ri --no-rdoc
+gem install json --no-ri --no-rdoc
+
 #Update hadoop-client jars to v2.4.0 so that Pig works properly with our clusters (which are based on Hadoop 2.4.0). Unfortunately, Ubuntu packages for Hadoop 2.4.0 are not officially available yet.
 if [[ ! -d /usr/lib/hadoop/hadoop2.2 ]];
 then
