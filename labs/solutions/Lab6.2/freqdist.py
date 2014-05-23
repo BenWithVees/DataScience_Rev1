@@ -4,8 +4,6 @@ import fileinput
 from nltk import FreqDist
 from nltk.tokenize import RegexpTokenizer
 
-tokenizer = RegexpTokenizer(r'\w+')
-
 lines = ""
 for line in fileinput.input():
 	line=line.strip()
