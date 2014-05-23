@@ -1,4 +1,5 @@
 #!/bin/bash
+DS_DIR=/root/DataScience_Rev1
 
 if [ $# -lt 1 ]
   then
@@ -27,10 +28,15 @@ CID_hive=$(docker run -d --privileged --link namenode:namenode -e namenode_ip=$I
 IP_hive=$(docker inspect --format "{{ .NetworkSettings.IPAddress }}" hiveserver)
 echo "Hive/Oozie running on $IP_hive"
 
+#Start the Mahout lab worker node
+echo "Starting node1 with Mahout lab content..."
+CID_hive=$(docker run -v $DS_DIR/labs/Lab3.1:/root/labs/lab3.1:rw -d --privileged --link namenode:namenode -e NODE_TYPE=workernode -e namenode_ip=$IP_namenode --dns 127.0.0.1 -p 4567:4567 -p 22  --name node1 -h node1 -i -t hwx/hdp_mahout_node)
+IP_mahout=$(docker inspect --format "{{ .NetworkSettings.IPAddress }}" node1)
+echo "Started node1 (with Mahout lab content) on $IP_mahout"
 
 #Start the WorkerNodes
-echo "Starting $num_of_nodes WorkerNodes..."
-for (( i=1; i<=$num_of_nodes; ++i));
+echo "Starting $((num_of_nodes-1)) additional WorkerNodes..."
+for (( i=2; i<=$num_of_nodes; ++i));
 do
 nodename="node$i"
 CID=$(docker run -d --privileged --link namenode:namenode -e namenode_ip=$IP_namenode -e NODE_TYPE=workernode --dns 127.0.0.1 -p 8010 -p 50075 -p 50010 -p 50020 -p 45454 -p 8081 -p 22 --name $nodename -h $nodename -i -t hwx/hdp_python_node)

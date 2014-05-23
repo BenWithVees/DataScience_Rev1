@@ -33,6 +33,12 @@ cd /root/dockerfiles/hdp_node
 docker build -t hwx/hdp_node .
 echo -e "\n*** Build of hwx/hdp_node complete! ***\n"
 
+# Build hwx/hdp_mahout_node
+echo -e "\n*** Building hwx/hdp_mahout_node ***\n"
+cd /root/$DS_DIR/dockerfiles/hdp_mahout_node
+docker build -t hwx/hdp_mahout_node .
+echo -e "\n*** Build of hwx/hdp_mahout_node complete! ***\n"
+
 # Build hwx/hdp_python_node
 echo -e "\n*** Building hwx/hdp_python_node ***\n"
 cd /root/$DS_DIR/dockerfiles/hdp_python_node
@@ -48,6 +54,14 @@ echo -e "\n*** Build of hwx/ipython_node complete! ***\n"
 #If this script is execute multiple times, untagged images get left behind
 #This command removes any untagged Docker images
 docker rmi -f $(docker images | grep '^<none>' | awk '{print $3}')
+
+# Add DS root directory to ds_cluster.sh if needed
+grep "DS_DIR=" /root/$DS_DIR/scripts/ds_cluster.sh
+if [[ $? > 0 ]];
+then
+  sed -e"/\/bin\/bash$/a DS_DIR=\/root\/$DS_DIR" /root/$DS_DIR/scripts/ds_cluster.sh > /tmp/ds_cluster.sh
+  mv /tmp/ds_cluster.sh /root/$DS_DIR/scripts
+fi
 
 # Copy utility scripts into /root/scripts, which is already in the PATH
 echo "Copying utility scripts..."
@@ -86,13 +100,6 @@ cp /root/scripts/hosts /etc/
 apt-get -y --force-yes install python-pip
 apt-get -y --force-yes install python-dateutil
 pip install -U avro
-
-#Install Ruby, needed for Mahout UI components
-apt-get -y --force-yes install ruby
-apt-get -y --force-yes install rubygems
-gem install sinatra --no-ri --no-rdoc
-gem install fastercsv --no-ri --no-rdoc
-gem install json --no-ri --no-rdoc
 
 #Update hadoop-client jars to v2.4.0 so that Pig works properly with our clusters (which are based on Hadoop 2.4.0). Unfortunately, Ubuntu packages for Hadoop 2.4.0 are not officially available yet.
 if [[ ! -d /usr/lib/hadoop/hadoop2.2 ]];
