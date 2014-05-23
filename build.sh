@@ -61,6 +61,7 @@ if [[ $? > 0 ]];
 then
   sed -e"/\/bin\/bash$/a DS_DIR=\/root\/$DS_DIR" /root/$DS_DIR/scripts/ds_cluster.sh > /tmp/ds_cluster.sh
   mv /tmp/ds_cluster.sh /root/$DS_DIR/scripts
+  chmod +x /root/$DS_DIR/scripts
 fi
 
 # Copy utility scripts into /root/scripts, which is already in the PATH
