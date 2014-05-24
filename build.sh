@@ -45,6 +45,12 @@ cd /root/$DS_DIR/dockerfiles/hdp_python_node
 docker build -t hwx/hdp_python_node .
 echo -e "\n*** Build of hwx/hdp_python_node complete! ***\n"
 
+# Build hwx/hdp_spark_node
+echo -e "\n*** Building hwx/hdp_spark_node ***\n"
+cd /root/$DS_DIR/dockerfiles/hdp_spark_node
+docker build -t hwx/hdp_spark_node .
+echo -e "\n*** Build of hwx/hdp_spark_node complete! ***\n"
+
 # Build hwx/ipython_node
 echo -e "\n*** Building hwx/ipython_node ***\n"
 cd /root/$DS_DIR/dockerfiles/ipython_node
@@ -55,33 +61,22 @@ echo -e "\n*** Build of hwx/ipython_node complete! ***\n"
 #This command removes any untagged Docker images
 docker rmi -f $(docker images | grep '^<none>' | awk '{print $3}')
 
-# Add DS root directory to ds_cluster.sh and ds_ipython.sh if needed
-grep "DS_DIR=" /root/$DS_DIR/scripts/ds_cluster.sh
-if [[ $? > 0 ]];
-then
-  sed -e"/\/bin\/bash$/a DS_DIR=\/root\/$DS_DIR" /root/$DS_DIR/scripts/ds_cluster.sh > /tmp/ds_cluster.sh
-  mv /tmp/ds_cluster.sh /root/$DS_DIR/scripts
-  chmod +x /root/$DS_DIR/scripts/ds_cluster.sh
-fi
-grep "DS_DIR=" /root/$DS_DIR/scripts/ds_ipython.sh
-if [[ $? > 0 ]];
-then
-  sed -e"/\/bin\/bash$/a DS_DIR=\/root\/$DS_DIR" /root/$DS_DIR/scripts/ds_ipython.sh > /tmp/ds_ipython.sh
-  mv /tmp/ds_ipython.sh /root/$DS_DIR/scripts
-  chmod +x /root/$DS_DIR/scripts/ds_ipython.sh
-fi
+# Add/modify DS root directory in start scripts 
+sed -i "/DS_DIR=.*/c\DS_DIR=$DS_DIR" /root/$DS_DIR/scripts/ds_cluster.sh
+sed -i "/DS_DIR=.*/c\DS_DIR=$DS_DIR" /root/$DS_DIR/scripts/ds_ipython.sh
+sed -i "/DS_DIR=.*/c\DS_DIR=$DS_DIR" /root/$DS_DIR/scripts/ds_spark_cluster.sh
 
 # Copy utility scripts into /root/scripts, which is already in the PATH
 echo "Copying utility scripts..."
 cp /root/dockerfiles/start_scripts/* /root/scripts/
 cp /root/$DS_DIR/scripts/* /root/scripts/
 
-
 # Install JDK 7
 apt-get -y --force-yes install openjdk-7-jdk
 
 # Fix a small issue with the yarn binary
 mkdir -p /usr/java/default/bin/
+rm -f /usr/java/default/bin/java
 ln -s /usr/bin/java /usr/java/default/bin/java
 
 mkdir /root/labs
