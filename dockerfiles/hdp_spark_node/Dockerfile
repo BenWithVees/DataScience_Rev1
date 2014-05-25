@@ -1,7 +1,7 @@
 #
 #
 #
-FROM hwx/hdp_python_node
+FROM hwx/hdp_node
 MAINTAINER Rich Raposa, rich@hortonworks.com
 
 #Install Fortran package needed by Spark MLLib
@@ -22,3 +22,13 @@ RUN echo "export MASTER=yarn-client" >> /etc/bashrc
 
 # Fix bug in spark-shell script
 RUN sed -i "/\/usr\/lib\/spark\/spark-shell/c\\/usr\/lib\/spark\/bin\/spark-shell" /usr/bin/spark-shell
+
+# Hack: link Python 2.7 to /usr/bin so that Spark will work in YARN. Need to figure out how to properly set YARN env variables to avoid having to make this change
+RUN mv /usr/bin/python /usr/bin/python.old
+RUN ln -s /anaconda/bin/python /usr/bin/python
+
+#Install Anaconda Python package. Spark MLLib requires Python 2.7, which doesn't come standard in CentOS
+RUN wget http://09c8d0b2229f813c1b93-c95ac804525aac4b6dba79b00b39d1d3.r79.cf1.rackcdn.com/Anaconda-1.9.2-Linux-x86_64.sh
+RUN bash Anaconda-1.9.2-Linux-x86_64.sh -b
+RUN rm -f Anaconda-1.9.2-Linux-x86_64.sh
+RUN echo "export PATH=\"/anaconda/bin:$PATH\"" >> /etc/bashrc

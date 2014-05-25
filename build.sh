@@ -62,9 +62,9 @@ echo -e "\n*** Build of hwx/ipython_node complete! ***\n"
 docker rmi -f $(docker images | grep '^<none>' | awk '{print $3}')
 
 # Add/modify DS root directory in start scripts 
-sed -i "/DS_DIR=.*/c\DS_DIR=$DS_DIR" /root/$DS_DIR/scripts/ds_cluster.sh
-sed -i "/DS_DIR=.*/c\DS_DIR=$DS_DIR" /root/$DS_DIR/scripts/ds_ipython.sh
-sed -i "/DS_DIR=.*/c\DS_DIR=$DS_DIR" /root/$DS_DIR/scripts/ds_spark_cluster.sh
+sed -i "/DS_DIR=.*/c\DS_DIR=/root/$DS_DIR" /root/$DS_DIR/scripts/ds_cluster.sh
+sed -i "/DS_DIR=.*/c\DS_DIR=/root/$DS_DIR" /root/$DS_DIR/scripts/ds_ipython.sh
+sed -i "/DS_DIR=.*/c\DS_DIR=/root/$DS_DIR" /root/$DS_DIR/scripts/ds_spark_cluster.sh
 
 # Copy utility scripts into /root/scripts, which is already in the PATH
 echo "Copying utility scripts..."

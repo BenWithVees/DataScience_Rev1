@@ -1,5 +1,5 @@
 #!/bin/bash
-DS_DIR=DataScience_Rev1
+DS_DIR=/root/DataScience_Rev1
 
 if [ $# -lt 1 ]
   then
@@ -33,7 +33,7 @@ echo "Starting $num_of_nodes WorkerNodes..."
 for (( i=1; i<=$num_of_nodes; ++i));
 do
 nodename="node$i"
-CID=$(docker run -d --privileged --link namenode:namenode -e namenode_ip=$IP_namenode -e NODE_TYPE=workernode --dns 8.8.8.8 -p 8010 -p 50075 -p 50010 -p 50020 -p 45454 -p 8081 -p 22 --name $nodename -h $nodename -i -t hwx/hdp_spark_node)
+CID=$(docker run -v $DS_DIR/labs/demos:/root/labs/demos:rw -d --privileged --link namenode:namenode -e namenode_ip=$IP_namenode -e NODE_TYPE=workernode --dns 8.8.8.8 -p 8010 -p 50075 -p 50010 -p 50020 -p 45454 -p 8081 -p 22 --name $nodename -h $nodename -i -t hwx/hdp_spark_node)
 IP_workernode=$(docker inspect --format "{{ .NetworkSettings.IPAddress }}" $nodename)
 echo "Started $nodename on IP $IP_workernode"
 done
