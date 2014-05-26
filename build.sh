@@ -46,10 +46,10 @@ docker build -t hwx/hdp_python_node .
 echo -e "\n*** Build of hwx/hdp_python_node complete! ***\n"
 
 # Build hwx/hdp_spark_node
-echo -e "\n*** Building hwx/hdp_spark_node ***\n"
-cd /root/$DS_DIR/dockerfiles/hdp_spark_node
-docker build -t hwx/hdp_spark_node .
-echo -e "\n*** Build of hwx/hdp_spark_node complete! ***\n"
+#echo -e "\n*** Building hwx/hdp_spark_node ***\n"
+#cd /root/$DS_DIR/dockerfiles/hdp_spark_node
+#docker build -t hwx/hdp_spark_node .
+#echo -e "\n*** Build of hwx/hdp_spark_node complete! ***\n"
 
 # Build hwx/ipython_node
 echo -e "\n*** Building hwx/ipython_node ***\n"
