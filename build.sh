@@ -126,6 +126,13 @@ then
   mv /usr/lib/hadoop-yarn/*.jar /usr/lib/hadoop-yarn/hadoop2.2
   tar -C /usr/lib/hadoop-yarn -zxvf /root/$DS_DIR/hadoop2.4/hadoop-yarn.tgz
 fi
+if [[ ! -d /usr/lib/hadoop-hdfs/hadoop2.2 ]];
+then
+  echo "Updating /usr/lib/hadoop-hdfs to Hadoop 2.4.0"
+  mkdir /usr/lib/hadoop-hdfs/hadoop2.2
+  mv /usr/lib/hadoop-hdfs/*.jar /usr/lib/hadoop-hdfs/hadoop2.2
+  tar -C /usr/lib/hadoop-hdfs -zxvf /root/$DS_DIR/hadoop2.4/hadoop-hdfs.tgz
+fi
 
 #Update hadoop-env.sh to allocate more memory for local tasks
 cp /root/$DS_DIR/hadoop2.4/hadoop-env.sh /etc/hadoop/conf

@@ -22,7 +22,7 @@ for i in range(k):
 P = Pig.compile("""register 'centroid.py' using jython as centroid; 
                    raw = load 'student.txt' as (name:chararray, age:int, gpa:double);
                    centroided = foreach raw generate gpa, centroid.get_closest_centroid(gpa, '$centroids') as centroid;
-                   grouped = group centroided by centroid;
+                   grouped = group centroided by centroid parallel 2;
                    result = foreach grouped generate group, AVG(centroided.gpa);
                    store result into 'kmoutput';
                 """)
