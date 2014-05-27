@@ -33,17 +33,17 @@ cd /root/dockerfiles/hdp_node
 docker build -t hwx/hdp_node .
 echo -e "\n*** Build of hwx/hdp_node complete! ***\n"
 
-# Build hwx/hdp_mahout_node
-echo -e "\n*** Building hwx/hdp_mahout_node ***\n"
-cd /root/$DS_DIR/dockerfiles/hdp_mahout_node
-docker build -t hwx/hdp_mahout_node .
-echo -e "\n*** Build of hwx/hdp_mahout_node complete! ***\n"
-
 # Build hwx/hdp_python_node
 echo -e "\n*** Building hwx/hdp_python_node ***\n"
 cd /root/$DS_DIR/dockerfiles/hdp_python_node
 docker build -t hwx/hdp_python_node .
 echo -e "\n*** Build of hwx/hdp_python_node complete! ***\n"
+
+# Build hwx/hdp_mahout_node
+echo -e "\n*** Building hwx/hdp_mahout_node ***\n"
+cd /root/$DS_DIR/dockerfiles/hdp_mahout_node
+docker build -t hwx/hdp_mahout_node .
+echo -e "\n*** Build of hwx/hdp_mahout_node complete! ***\n"
 
 # Build hwx/hdp_spark_node
 #echo -e "\n*** Building hwx/hdp_spark_node ***\n"
