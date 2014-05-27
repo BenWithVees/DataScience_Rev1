@@ -2,7 +2,7 @@ FROM ubuntu
 
 MAINTAINER Rich Raposa, rich@hortonworks.com
 
-RUN apt-get -y install openssh-server openssh-client libagg-dev 
+RUN apt-get -y install openssh-server openssh-client libagg-dev nano vim
 
 #Install IPython and stats/scientific/nlp libraries
 RUN apt-get -y install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose build-essential python-dev python-setuptools libatlas-dev libatlas3-base python-pip 
@@ -38,6 +38,7 @@ RUN mkdir /root/.ssh
 ADD conf/id_rsa /root/.ssh/id_rsa
 ADD conf/id_rsa.pub /root/.ssh/id_rsa.pub
 ADD conf/sshd_config /etc/ssh/
+ADD conf/nanorc /root/.nanorc
 
 EXPOSE 22 8888
 
