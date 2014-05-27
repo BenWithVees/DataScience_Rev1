@@ -71,9 +71,6 @@ echo "Copying utility scripts..."
 cp /root/dockerfiles/start_scripts/* /root/scripts/
 cp /root/$DS_DIR/scripts/* /root/scripts/
 
-# Install JDK 7
-apt-get -y --force-yes install openjdk-7-jdk
-
 # Fix a small issue with the yarn binary
 mkdir -p /usr/java/default/bin/
 rm -f /usr/java/default/bin/java
@@ -94,6 +91,7 @@ gpg -a --export 07513CAD | apt-key add –
 apt-get update
 apt-get -y --force-yes install hadoop-client
 apt-get -y --force-yes install pig
+apt-get -y --force-yes install openjdk-7-jdk
 cp /root/dockerfiles/hdp_node/configuration_files/core_hadoop/* /etc/hadoop/conf/
 
 #Replace /etc/hosts with one that contains the Docker server names
