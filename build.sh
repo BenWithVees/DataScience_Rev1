@@ -137,4 +137,7 @@ fi
 #Update hadoop-env.sh to allocate more memory for local tasks
 cp /root/$DS_DIR/hadoop2.4/hadoop-env.sh /etc/hadoop/conf
 
+#Enable syntax highlighting in nano
+cp /etc/nanorc /root/.nanorc
+
 echo -e "\n*** The lab environment has successfully been built for this classroom VM ***\n"
