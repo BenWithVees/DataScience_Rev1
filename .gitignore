@@ -1,3 +1,5 @@
 Sandbox.ipynb
 .ipynb_checkpoints
 *-checkpoint.ipynb
+pig*.log
+newsgroups.avro
