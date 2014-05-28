@@ -2,6 +2,7 @@ FROM ubuntu
 
 MAINTAINER Rich Raposa, rich@hortonworks.com
 
+RUN apt-get -y update
 RUN apt-get -y install openssh-server openssh-client libagg-dev nano vim
 
 #Install IPython and stats/scientific/nlp libraries
