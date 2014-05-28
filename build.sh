@@ -92,6 +92,7 @@ apt-get update
 apt-get -y --force-yes install hadoop-client
 apt-get -y --force-yes install pig
 apt-get -y --force-yes install openjdk-7-jdk
+apt-get -y --force-yes install unzip
 cp /root/dockerfiles/hdp_node/configuration_files/core_hadoop/* /etc/hadoop/conf/
 
 #Replace /etc/hosts with one that contains the Docker server names
