@@ -7,13 +7,14 @@ MAINTAINER Rich Raposa, rich@hortonworks.com
 # Enable EPEL repo, which contains some of the Python dependencies below
 RUN rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
-# Install Python dependencies for data anlysis and statistics 
-RUN yum -y install gcc gcc-c++ numpy python-devel python-pip scipy python-matplotlib scipy sympy python-nose libyaml libyaml-devel
+# Install Python and compiler dependencies for data anlysis and statistics 
+RUN yum -y install gcc gcc-c++ gcc-gfortran python-devel python-pip python-matplotlib sympy python-nose libyaml libyaml-devel atlas atlas-devel
 
 #Install additional packages not available in the yum package repos
 RUN pip install -U virtualenv
 RUN pip install -U distribute
 RUN pip install -U numpy
+RUN pip install -U scipy
 RUN pip install -U pandas
 RUN pip install -U scikit-learn
 RUN pip install -U pyyaml
