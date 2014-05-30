@@ -5,6 +5,7 @@ import avro.schema
 import tarfile
 import os
 import re
+import argparse
 import dateutil.parser as parser
 from avro.datafile import DataFileWriter
 from avro.io import DatumWriter
@@ -66,7 +67,11 @@ def strip_newsgroup_footer(text):
     else:
         return text
 
-    
+
+argparser = argparse.ArgumentParser(description = 'Convert and merge raw newsgroup data into a single Avro datafile.')
+argparser.add_argument('-topic', dest = 'topic', help = 'the newsgroup topic to process', default = "")
+args = argparser.parse_args()
+
 #Each newsgroup article (message) will become a record in the output Avro data file,
 #containing the header fields shown below, as well as an
 #unstructured Content field containing the body text
@@ -90,7 +95,9 @@ schema = avro.schema.parse(_AVRO_SCHEMA)
 writer = DataFileWriter(open(_AVRO_FILE_NAME, "w"), DatumWriter(), schema)
 
 tar = tarfile.open(u"newsgroups.tgz", 'r:gz')
-_FILENAME_RE = re.compile(r'.*/(\d+)$')
+print r'.*' + re.escape(args.topic) + '/(\d+)$'
+_FILENAME_RE = re.compile(r'.*' + re.escape(args.topic) + '/(\d+)$')
+
 #Walk through the newgroup files, parsing each file and writing into the target Avro datafile
 for tar_info in tar:
     # We only want to process newsgroup articles, which have numeric file names. Ignore anything else
