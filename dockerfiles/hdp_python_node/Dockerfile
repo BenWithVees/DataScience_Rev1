@@ -15,7 +15,8 @@ RUN pip install -U virtualenv
 RUN pip install -U distribute
 RUN pip install -U numpy
 RUN pip install -U scipy
-RUN pip install -U pandas
+# Pandas 0.14.0 was causing problems, so lock into an older, more stable version
+RUN pip install -U pandas==0.13.1
 RUN pip install -U scikit-learn
 RUN pip install -U pyyaml
 RUN pip install -U nltk

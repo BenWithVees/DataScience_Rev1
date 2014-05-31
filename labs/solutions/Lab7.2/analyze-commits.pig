@@ -1,4 +1,4 @@
-define freqdist `freqdist.py` ship ('freqdist.py');
+define freqdist `python freqdist.py` ship ('freqdist.py');
 
 register 'elephant-bird-pig-4.4.jar';
 register 'elephant-bird-hadoop-compat-4.4.jar';

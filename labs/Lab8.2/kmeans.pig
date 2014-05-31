@@ -1,4 +1,4 @@
-define kmeans `kmeans.py` ship ('kmeans.py');
+define kmeans `python kmeans.py` ship ('kmeans.py');
 
 rmf kmeans_output;
 
