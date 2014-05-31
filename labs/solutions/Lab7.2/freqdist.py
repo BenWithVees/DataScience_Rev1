@@ -1,8 +1,3 @@
-
-# coding: utf-8
-
-# In[ ]:
-
 #!/usr/bin/python
 
 import fileinput
@@ -21,9 +16,4 @@ tokenizer = RegexpTokenizer(r'\w+')
 freq = FreqDist(tokenizer.tokenize(cleaned_input))
 for k in freq.keys()[:50]:
     print "%s\t%s" % (k, freq[k]) 
-
-
-# In[ ]:
-
-
 
