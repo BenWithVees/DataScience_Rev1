@@ -2,17 +2,38 @@
 
 if [[ -z $1 ]];
 then
-  echo "Usage: $0 <class_version>"
+  echo "Usage: $0 <class_version> [force|skip-images]"
   exit 1;
+fi
+
+SKIP_IMAGES=
+FORCE=
+if [ $2 == "force" ]; then
+  FORCE=true
+  echo "NOTE: Rebuilding classroom environment, removing any local changes..."
+elif [ $2 == "skip-images" ]; then
+  SKIP_IMAGES=true
+  echo "NOTE: Skipping Docker image file updates..."
 fi
 
 DS_DIR=$1
 
-# Grab the HWX-University Dockerfiles
-#cd /root
-#git clone https://github.com/HortonworksUniversity/dockerfiles.git
-cd /root/dockerfiles
+cd /root/$DS_DIR
+if [[ ! -z $FORCE ]];
+then
+  git reset HEAD --hard
+fi
 git pull
+
+cd /root/dockerfiles
+if [[ ! -z $FORCE ]];
+then
+  git reset HEAD --hard
+fi
+git pull
+
+if [[ (-z $SKIP_IMAGES) || (! -z $FORCE) ]];
+then
 
 # Build the Docker images
 
@@ -61,6 +82,8 @@ echo -e "\n*** Build of hwx/ipython_node complete! ***\n"
 #This command removes any untagged Docker images
 docker rmi -f $(docker images | grep '^<none>' | awk '{print $3}')
 
+fi
+
 # Add/modify DS root directory in start scripts 
 sed -i "/DS_DIR=.*/c\DS_DIR=/root/$DS_DIR" /root/$DS_DIR/scripts/ds_cluster.sh
 sed -i "/DS_DIR=.*/c\DS_DIR=/root/$DS_DIR" /root/$DS_DIR/scripts/ds_ipython.sh
@@ -75,9 +98,6 @@ cp /root/$DS_DIR/scripts/* /root/scripts/
 mkdir -p /usr/java/default/bin/
 rm -f /usr/java/default/bin/java
 ln -s /usr/bin/java /usr/java/default/bin/java
-
-mkdir /root/labs
-cp -R /root/$1/labs/* /root/labs/
 
 # Setup environment variables
 cp /root/scripts/setpath.sh /etc/profile.d/
