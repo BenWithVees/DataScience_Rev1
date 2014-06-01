@@ -6,7 +6,7 @@ RUN apt-get -y update
 RUN apt-get -y install openssh-server openssh-client libagg-dev nano vim
 
 #Install IPython and stats/scientific/nlp libraries
-RUN apt-get -y install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose build-essential python-dev python-setuptools libatlas-dev libatlas3-base python-pip 
+RUN apt-get -y install python-numpy python-scipy python-matplotlib ipython ipython-notebook python-pandas python-sympy python-nose build-essential python-dev python-setuptools libatlas-dev python-pip 
 RUN pip install -U scikit-learn
 RUN pip install -U pyyaml
 RUN pip install -U nltk
